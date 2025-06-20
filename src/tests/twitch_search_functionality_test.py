@@ -17,15 +17,34 @@ try:
     # Click search icon
     WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
         (By.XPATH, '//*[@id="root"]/div[2]/a[2]/div/div[1]/svg'))).click()
-     # wait for the page to load and search bar to exist and enter search term
+     # wait for the page to load and search bar to exist and click on it
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
+        (By.XPATH, '//input[@type="search"]'))).click()
+    # Enter search term 'StarCraft II'
     WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
         (By.XPATH, '//input[@type="search"]'))).send_keys('StarCraft II')
+    # Click on the first search result
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
+        (By.XPATH, '//*[@id="page-main-content-wrapper"]/div/ul/li[1]/a'))).click()
     # scroll down two times to load more results
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     # wait for the search results to load
     WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
         (By.XPATH, '//div[@data-a-target="search-result-game"]')))
+    # Click on visible streamer in the search results 
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
+        (By.XPATH, '//div[contains(@class, "the-avatar")]'))).click()
+    if driver.find_element(By.XPATH, '//button[@data-a-target="player-overlay-close-button"]').is_displayed():
+        # If the pop-up appears, close it
+        driver.find_element(By.XPATH, '//button[@data-a-target="player-overlay-close-button"]').click()
+    # Check if the stream is live
+    if driver.find_element(By.XPATH, '//div[@data-a-target="player-overlay-click-handler"]').is_enabled():
+        # If the stream is live, click on it
+        driver.find_element(By.XPATH, '//div[@data-a-target="player-overlay-click-handler"]').click()
+    # waiting for the stream to load
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
+        (By.XPATH, '//div[@data-a-target="player-overlay-click-handler"]')))
 except NoSuchElementException as err:
     message = 'Exception: ' + str(err.__class__) + str(err.msg)
     # If an element is not found, set the session status to failed

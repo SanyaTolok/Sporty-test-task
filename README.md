@@ -28,5 +28,6 @@ Covered test cases:
 To run tests use: pytest -v -s flights_tests.py --html=report.html --self-contained-html
 Report example see report.html
 
+<img width="2240" alt="Screenshot 2025-06-21 at 00 06 21" src="https://github.com/user-attachments/assets/45f505ae-ce03-4e58-9400-8278941d89c1" />
 
 

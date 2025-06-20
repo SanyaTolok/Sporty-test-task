@@ -1,6 +1,5 @@
-browserstack-local >= 1.2.3
-selenium
-browserstack-sdk
+selenium==4.20.0
+webdriver-manager==3.8.5
 requests==2.25.1
 pytest==8.4.1
 pytest-html==4.1.1

@@ -3,3 +3,4 @@ selenium
 browserstack-sdk
 requests==2.25.1
 pytest==8.4.1
+pytest-html==4.1.1

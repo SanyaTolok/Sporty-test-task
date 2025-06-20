@@ -15,8 +15,18 @@ Tests are located in /Sporty-test-task/src/tests/
 API tests are done using pytest and python request library
 For testing used Aviationstack API which is list in https://github.com/public-apis/public-apis
 Covered test cases:
-Verify ability to get flights list without API key
-Verify ability to get flights list with API key
-Verify ability to get flights history
-Verify ability to get flights rotes 
+1.  Test case to verify a successful GET request to the /flights endpoint.
+    Checks for a 200 OK status code and that the response contains data.
+2.  Test case to verify GET request to /flights with a 'flight_status' parameter.
+    Checks for 200 OK and that results generally match the requested status.
+3. Test case to verify handling of an invalid API key.
+    Expects a 401 Unauthorized status code.
+4.  Test case to verify handling of a missing API key.
+    Expects a 401 Unauthorized status code.
+
+## Run tests
+To run tests use: pytest -v -s flights_tests.py --html=report.html --self-contained-html
+Report example see report.html
+
+
 

@@ -7,10 +7,6 @@ from api_helper import APIHelper
 
 @pytest.fixture(scope="module")
 def api_key():
-    """
-    Pytest fixture to retrieve the Aviationstack API key from environment variables.
-    Raises an error if the API key is not set.
-    """
     key = os.getenv("AVIATIONSTACK_API_KEY")
     if not key:
         pytest.fail("AVIATIONSTACK_API_KEY environment variable is not set. "

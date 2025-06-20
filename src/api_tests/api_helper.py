@@ -3,6 +3,7 @@ import json
 
 class APIHelper:
     def __init__(self, base_url: str = ""):
+       
         self.base_url = base_url
 
     def _send_request(self, method: str, endpoint: str, **kwargs) -> requests.Response:

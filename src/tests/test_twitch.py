@@ -32,7 +32,7 @@ def test_open_twitch_web_app(browser):
     # Wait for the page title to contain "Twitch" for up to 10 seconds.
     # This helps ensure the page has loaded before proceeding.
     try:
-        WebDriverWait(browser, 10).until(
+        WebDriverWait(browser, 5).until(
             EC.title_contains(expected_title_part)
         )
         print(f"Page title found containing '{expected_title_part}': {browser.title}")
@@ -47,44 +47,64 @@ def test_open_twitch_web_app(browser):
         # accept coocies
         browser.find_element(By.XPATH, '//button[@data-a-target="consent-banner-accept"]').click()
         # Click search icon
-        WebDriverWait(browser, 10).until(EC.visibility_of_element_located(
+        WebDriverWait(browser, 5).until(EC.visibility_of_element_located(
             (By.XPATH, '//*[@id="root"]/div[2]/a[2]'))).click()
         # wait for the page to load and search bar to exist and click on it
-        WebDriverWait(browser, 10).until(EC.visibility_of_element_located(
+        WebDriverWait(browser, 5).until(EC.visibility_of_element_located(
             (By.XPATH, '//input[@type="search"]')))
         # Enter search term 'StarCraft II'
-        WebDriverWait(browser, 10).until(EC.visibility_of_element_located(
+        WebDriverWait(browser, 5).until(EC.visibility_of_element_located(
             (By.XPATH, '//input[@type="search"]'))).send_keys('StarCraft II')
-        browser.implicitly_wait(10) 
+        browser.implicitly_wait(5) 
         browser.find_element(By.XPATH, '//img[@alt="StarCraft II"]').click()
         print("scroll down two times to load more results")
         actions = ActionChains(browser)
-        actions.send_keys(Keys.PAGE_DOWN).perform()
+        # Alternative way to scroll down using ActionChains
+        # actions.send_keys(Keys.PAGE_DOWN).perform()
+        # import time
+        # time.sleep(3) 
+        # actions.send_keys(Keys.PAGE_DOWN).perform()
+        # time.sleep(3) 
+        browser.execute_script("window.scrollBy(0, window.innerHeight);")
         import time
-        time.sleep(3) 
-        print("Scrolling down again using ActionChains with PAGE_DOWN...")
-        actions.send_keys(Keys.PAGE_DOWN).perform()
-        import time
-        time.sleep(3) 
-        browser.implicitly_wait(10) 
+        time.sleep(1) 
+        browser.execute_script("window.scrollBy(0, window.innerHeight);")
+        time.sleep(1) 
         print("Click on visible streamer in the search results ")
-        browser.implicitly_wait(10) 
-        WebDriverWait(browser, 10).until(EC.visibility_of_element_located(
+        WebDriverWait(browser, 5).until(EC.visibility_of_element_located(
             (By.XPATH, '//a[contains(@class, "tw-link")]')))
-        browser.implicitly_wait(10) 
         actions.move_to_element(
             browser.find_element(By.XPATH, '//a[contains(@class, "tw-link")]')).click().perform()
-        # Wait for the streamer page to load
-        WebDriverWait(browser, 10).until(
+        # Wait for the streamer page to load (Note I didn't found any of streamers with discleamer on a page that is why this step is missed but it can be handled with simpe if else statement
+        WebDriverWait(browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//div[@data-a-target="player-overlay-click-handler"]'))
         )
-        time.sleep(30) 
+        WebDriverWait(browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@aria-label="Follow "]'))
+        )
+        WebDriverWait(browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//section[@id="channel-player-disclosures"]'))
+        )
+        WebDriverWait(browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@data-a-target="chat-settings"]'))
+        )
+        WebDriverWait(browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@aria-label="More channel actions"]'))
+        )
+        WebDriverWait(browser, 5).until(
+            EC.visibility_of_element_located((By.XPATH, '//div[@data-a-target="video-ref"]'))
+        )
+        WebDriverWait(browser, 5).until(
+            EC.visibility_of_element_located((By.XPATH, '//div[@aria-label="Send a message"]'))
+        )
+        WebDriverWait(browser, 5).until(
+            EC.invisibility_of_element((By.XPATH, '//div[contains(text(), "Connecting to Chat")]'))
+        )
         print("Streamer page loaded successfully.")
         browser.save_screenshot("twitch_streamer_page.png")
-        browser.implicitly_wait(10) 
     finally:
         if browser:
             print("Closing the browser...")
-            browser.quit() # This closes all associated windows and ends the WebDriver session.
+            browser.quit()
         else:
             print("Driver was not initialized, nothing to close.")

@@ -8,9 +8,12 @@ pip3 install -r /Sporty-test-task/src/requirements.txt
 ## UI Tests 
 Tests are located in /Sporty-test-task/src/tests/
 
-### Run tests
+### Run tests using mobile emulator
 cd src
-browserstack-sdk pytest -s ~/Sporty-test-task/src/tests/
+pytest --env mobile -s -v
+### Run tests using desctop resolution
+pytest --env desktop -s -v
+Note env was added in oder to have ability to extend tests and has ability to scale them
 
 ## API tests
 API tests are done using pytest and python request library

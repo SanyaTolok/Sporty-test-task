@@ -9,11 +9,17 @@ pip3 install -r /Sporty-test-task/src/requirements.txt
 Tests are located in /Sporty-test-task/src/tests/
 
 ### Run tests using mobile emulator
-cd src
+cd src (in case if you are not in src derectory)
+
 pytest --env mobile -s -v
+
 ### Run tests using desctop resolution
 pytest --env desktop -s -v
-Note env was added in oder to have ability to extend tests and has ability to scale them
+Note env was added in oder to have ability to extend tests and has ability to scale test but tests itself are designed for mobile view
+
+
+https://github.com/user-attachments/assets/71573681-2dd5-4d13-9731-b1d58b45129b
+
 
 ## API tests
 API tests are done using pytest and python request library
